@@ -4,7 +4,10 @@ import * as BooksAPI from './BooksAPI';
 
 class  App extends Component{
   state = {
-    books: []
+    books: [],
+    currentlyReading:[],
+    read:[],
+    wantToRead:[]
   }
   componentDidMount() {
     BooksAPI.getAll().then(books => {
@@ -13,8 +16,16 @@ class  App extends Component{
       }))
     })
   }
+  shelfType = ()=> {
+    this.state.books.map( book => {
+      if(book.shelf === 'read') {
+        console.log(book)
+      } 
+    })
+    }
   render(){
-    console.log(this.state.books)
+    this.shelfType()
+    console.log('all books', this.state.books)
     return(
       <div className='app'>
         <div className='list-books'>
