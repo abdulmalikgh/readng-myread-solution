@@ -1,13 +1,20 @@
 import React ,{ Component } from 'react';
 import './App.css';
+import * as BooksAPI from './BooksAPI';
 
 class  App extends Component{
-  constructor(props){
-    super(props)
-
-  }// end of constructor
-
+  state = {
+    books: []
+  }
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState( ()=>({
+        books
+      }))
+    })
+  }
   render(){
+    console.log(this.state.books)
     return(
       <div className='app'>
         <div className='list-books'>
