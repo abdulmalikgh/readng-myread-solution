@@ -2,7 +2,8 @@ import React ,{ Component } from 'react';
 import './App.css';
 import * as BooksAPI from './BooksAPI';
 import ReadBooks from './ReadBooks';
-
+import WantToReadBooks from './WantToReadBooks';
+import CurrentlyReadBooks from './CurrentlyReadBooks';
 class  App extends Component{
   state = {
     books: [],
@@ -27,6 +28,8 @@ class  App extends Component{
           </div>
           <div className='list-books-content'>
             <div>
+              <CurrentlyReadBooks books={currentlyReading}/>
+              <WantToReadBooks books={wantToRead} />
               <ReadBooks books={read}/>
             </div>
           </div>
