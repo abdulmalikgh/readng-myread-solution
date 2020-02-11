@@ -53,6 +53,9 @@ class  App extends Component{
             </div>
           </div>
         </div>
+        <div className="open-search">
+              <button> Add a book </button>
+            </div>
       </div>
     )  
   }
