@@ -15,6 +15,25 @@ class  App extends Component{
       }))
     })
   }
+  handleChange = bookId => event => {
+    const option = event.target.value;
+     if(option === 'none') {
+       return
+     }
+  
+     this.setState( prevState => {
+      const updatedBooks = prevState.books.map( book => {
+        if(book.id === bookId) {
+          BooksAPI.update(book,option)
+          book.shelf = option;
+        }
+        return book
+      })
+      return {
+        books:updatedBooks
+      }
+     })
+  }
   render(){
    const read = this.state.books.filter( book => book.shelf === 'read');
    const wantToRead = this.state.books.filter( book => book.shelf === 'wantToRead');
@@ -28,9 +47,9 @@ class  App extends Component{
           </div>
           <div className='list-books-content'>
             <div>
-              <CurrentlyReadBooks books={currentlyReading}/>
+              <CurrentlyReadBooks books={currentlyReading} handleChange={this.handleChange}/>
               <WantToReadBooks books={wantToRead} />
-              <ReadBooks books={read}/>
+              <ReadBooks books={read} />
             </div>
           </div>
         </div>
