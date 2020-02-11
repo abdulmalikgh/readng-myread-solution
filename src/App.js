@@ -48,8 +48,8 @@ class  App extends Component{
           <div className='list-books-content'>
             <div>
               <CurrentlyReadBooks books={currentlyReading} handleChange={this.handleChange}/>
-              <WantToReadBooks books={wantToRead} />
-              <ReadBooks books={read} />
+              <WantToReadBooks books={wantToRead} handleChange={this.handleChange}/>
+              <ReadBooks books={read} handleChange={this.handleChange}/>
             </div>
           </div>
         </div>
