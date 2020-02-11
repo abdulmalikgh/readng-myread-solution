@@ -1,5 +1,4 @@
 import React from 'react';
-//import BookShelf from './BookShelf';
 function CurrentlyReadBooks(props){
   return (
     <div className="bookshelf">
