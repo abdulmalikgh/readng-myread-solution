@@ -5,7 +5,7 @@ function WantToReadBooks(props){
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">Want To Read</h2> 
-       <BookShelf books={props.books} />
+       <BookShelf books={props.books}/>
     </div>
  )
 }
