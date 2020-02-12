@@ -4,6 +4,9 @@ import * as BooksAPI from './BooksAPI';
 import ReadBooks from './ReadBooks';
 import WantToReadBooks from './WantToReadBooks';
 import CurrentlyReadBooks from './CurrentlyReadBooks';
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import SearchBooks from './SearchBooks';
 class  App extends Component{
   state = {
     books: [],
@@ -41,21 +44,27 @@ class  App extends Component{
    
     return(
       <div className='app'>
-        <div className='list-books'>
-          <div className='list-books-title'>
-            <h1>MyReads</h1>
-          </div>
-          <div className='list-books-content'>
-            <div>
-              <CurrentlyReadBooks books={currentlyReading} handleChange={this.handleChange}/>
-              <WantToReadBooks books={wantToRead} handleChange={this.handleChange}/>
-              <ReadBooks books={read} handleChange={this.handleChange}/>
-            </div>
-          </div>
-        </div>
-        <div className="open-search">
-              <button> Add a book </button>
-            </div>
+        <Route exact path='/' render={ ()=> (
+           <div className='list-books'>
+           <div className='list-books-title'>
+             <h1>MyReads</h1>
+           </div>
+           <div className='list-books-content'>
+             <div>
+               <CurrentlyReadBooks books={currentlyReading} handleChange={this.handleChange}/>
+               <WantToReadBooks books={wantToRead} handleChange={this.handleChange}/>
+               <ReadBooks books={read} handleChange={this.handleChange}/>
+             </div>
+           </div>
+         <div className="open-search">
+         <Link to='/search'><button>Add a book</button></Link>
+       </div>
+       </div>
+        )}/>
+          
+         <Route path='/search' 
+           component={SearchBooks}
+          />
       </div>
     )  
   }
