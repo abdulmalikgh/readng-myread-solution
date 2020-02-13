@@ -7,6 +7,8 @@ import CurrentlyReadBooks from './CurrentlyReadBooks';
 import { Link } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import SearchBooks from './SearchBooks';
+import { debounce } from 'throttle-debounce';
+
 class  App extends Component{
   state = {
     books: [],
@@ -22,7 +24,11 @@ class  App extends Component{
   resetBooks = ()=>{
     this.setState({searchResults:[]})
   }
-  searchBooks = (query)=>{
+  searchBooks = debounce(300,false,query=>{
+    if(query.length === 0) {
+      return this.setState( {searchResults:[]})
+    }
+
     if(query.length > 0) {
      BooksAPI.search(query).then(books => {
 
@@ -32,11 +38,9 @@ class  App extends Component{
         this.setState({ searchResults:books})
       }
      });
-    }else {
-      this.setState({searchResults:[]})
     }
   }
- 
+  )
   handleChange = book => event => {
     const shelf = event.target.value;
     
