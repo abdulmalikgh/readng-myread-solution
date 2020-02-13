@@ -11,7 +11,7 @@ function CurrentlyReadBooks(props){
               <div className="book-top">
                 <div className="book-cover" style={{width: 128, height: 192 , backgroundImage:`url(${book.imageLinks.smallThumbnail})`}}></div>
                 <div className="book-shelf-changer">
-                  <select value={book.shelf} onChange={props.handleChange(book.id)}>
+                  <select value={book.shelf} onChange={props.handleChange(book)}>
                     <option disabled>Move to...</option>
                     <option value="currentlyReading">currentlyReading</option>
                     <option value="wantToRead">Want to Read</option>

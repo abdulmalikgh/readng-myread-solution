@@ -10,6 +10,7 @@ import SearchBooks from './SearchBooks';
 class  App extends Component{
   state = {
     books: [],
+    searchResults: []
   }
   componentDidMount() {
     BooksAPI.getAll().then(books => {
@@ -18,24 +19,39 @@ class  App extends Component{
       }))
     })
   }
-  handleChange = bookId => event => {
-    const option = event.target.value;
-     if(option === 'none') {
-       return
-     }
-  
-     this.setState( prevState => {
-      const updatedBooks = prevState.books.map( book => {
-        if(book.id === bookId) {
-          BooksAPI.update(book,option)
-          book.shelf = option;
-        }
-        return book
-      })
-      return {
-        books:updatedBooks
+  resetBooks = ()=>{
+    this.setState({searchResults:[]})
+  }
+  searchBooks = (query)=>{
+    if(query.length > 0) {
+     BooksAPI.search(query).then(books => {
+
+      if(books.error) {
+        this.setState( { searchResults: []})
+      } else {
+        this.setState({ searchResults:books})
       }
-     })
+     });
+    }else {
+      this.setState({searchResults:[]})
+    }
+  }
+ 
+  handleChange = book => event => {
+    const shelf = event.target.value;
+    
+    BooksAPI.update(book,shelf);
+    
+    let updatedBooks = [];
+    updatedBooks = this.state.books.filter( b => b.id !== book.id)
+
+    if(shelf !== 'none') {
+      book.shelf = shelf;
+      updatedBooks = updatedBooks.concat(book)
+    }
+    this.setState({
+      books:updatedBooks
+    })
   }
   render(){
    const read = this.state.books.filter( book => book.shelf === 'read');
@@ -63,7 +79,14 @@ class  App extends Component{
         )}/>
           
          <Route path='/search' 
-           component={SearchBooks}
+           render={() => (
+             <SearchBooks 
+             searchBooks={this.searchBooks}
+             searchResults={this.state.searchResults}
+             resetBooks={this.resetBooks}
+             handleChange={this.handleChange}
+             books={this.state.books}/>
+           )}
           />
       </div>
     )  
